@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LocationTrends from './LocationTrends';
 import GoogleMapReact from 'google-map-react';
+import LocationTrends from './LocationTrends';
 import { getWoeid, getTrends} from '../lib/twitter/apis';
 import MapStyles from '../styles/Map';
 
@@ -15,8 +15,6 @@ const Map = ({ center, zoom}) => {
         const trendsData = await getTrends(location.woeid);
         setTrends(trendsData.slice(0,10));
     };
-
-
 
     return (
         <MapStyles>
@@ -38,6 +36,6 @@ Map.defaultProps = {
         lng: 33.0622
     },
     zoom: 5
-}
+};
 
 export default Map;
