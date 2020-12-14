@@ -1,22 +1,11 @@
-import axios from 'axios';
+import twitter from './twitter';
 
-const config = {
-  headers: { 
-    Authorization: `Bearer ${process.env.TWITTER_BEARER}`,
-    
-  }
-};
-
-async function fetchData(lat, lng){
+async function getWoeid(lat, lng){
   try {
-    const response = await axios.get(`https://api.twitter.com/1.1/trends/closest.json?lat=${lat}&long=${lng}`, config);
+    const response = await twitter.get(`/trends/closest.json?lat=${lat}&long=${lng}`);
     const { country, name, woeid } = response.data[0];
-    const object = {
-      country,
-      name,
-      woeid
-    };
-    return object;
+
+    return { country, name, woeid };
   } catch (e) {
     console.log(e);
   }
@@ -24,7 +13,7 @@ async function fetchData(lat, lng){
 
 export default async (req, res) => {
   const { lat, lng } = req.query;
-  const data = await fetchData(lat, lng);
+  const data = await getWoeid(lat, lng);
   res.statusCode = 200
   res.json({ woeid: data })
 }

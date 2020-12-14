@@ -1,24 +1,17 @@
-import axios from 'axios';
+import twitter from './twitter';
 
-const config = {
-  headers: { 
-    Authorization: `Bearer ${process.env.TWITTER_BEARER}`,
-    
-  }
-};
-
-async function fetchData(woeid){
+async function getTrends(woeid){
   try {
-    const response = await axios.get(`https://api.twitter.com/1.1/trends/place.json?id=${woeid}`, config);
+    const response = await twitter.get(`/trends/place.json?id=${woeid}`);
     return response.data;
   } catch (e) {
-    console.log('Error');
+    console.log(e);
   }
 };
 
 export default async (req, res) => {
   const { woeid } = req.query;
-  const trends = await fetchData(woeid);
+  const trends = await getTrends(woeid);
   res.statusCode = 200
   res.json({ trends })
 }

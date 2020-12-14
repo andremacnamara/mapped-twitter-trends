@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import LocationTrends from './LocationTrends';
 import GoogleMapReact from 'google-map-react';
-import axios from 'axios';
+import { getWoeid, getTrends} from '../lib/twitter/apis';
+import MapStyles from '../styles/Map';
 
 const Map = ({ center, zoom}) => {
 
@@ -15,39 +16,19 @@ const Map = ({ center, zoom}) => {
         setTrends(trendsData.slice(0,10));
     };
 
-    const getWoeid = async (lat, lng) => {
-        const response = await axios.get('http://localhost:3000/api/woeid', {
-            params: {
-              lat: lat,
-              lng: lng
-            },
-          });
 
-        return response.data.woeid;
-      };
-
-      const getTrends = async (woeid) => {
-        const response = await axios.get('http://localhost:3000/api/trends', {
-            params: {
-                woeid
-            },
-          });
-
-
-        return response.data.trends[0].trends;
-      };
 
     return (
-        <div className="map">
-            <GoogleMapReact 
-                bootstrapURLKeys={{ key: process.env.GOOGLE_MAP_API_KEY }}
-                defaultCenter={center}
-                defaultZoom={zoom}
-                onClick={(e) => onMapClick(e)}
-            />            
-            {trends && <LocationTrends trends={trends} location={locationData}/>}
+        <MapStyles>
+          <GoogleMapReact 
+              bootstrapURLKeys={{ key: process.env.GOOGLE_MAP_API_KEY }}
+              defaultCenter={center}
+              defaultZoom={zoom}
+              onClick={(e) => onMapClick(e)}
+          />            
+          {trends && <LocationTrends trends={trends} location={locationData}/>}
+        </MapStyles>
 
-        </div>
     );
 };
 
