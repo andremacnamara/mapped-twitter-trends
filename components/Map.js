@@ -19,7 +19,7 @@ const Map = ({ center, zoom}) => {
     return (
         <MapStyles>
           <GoogleMapReact 
-              bootstrapURLKeys={{ key: process.env.GOOGLE_MAP_API_KEY }}
+              bootstrapURLKeys={{ key: 'AIzaSyC6-hIRYasLLFlze4Dx9G75LAtTowan6us' }}
               defaultCenter={center}
               defaultZoom={zoom}
               onClick={(e) => onMapClick(e)}
