@@ -1,4 +1,5 @@
 import LocationTrendsBox from '../styles/LocationTrendsBox';
+import Head from 'next/head'
 
 const LocationTrends = ({ trends , location: { country, name }}) => {
     const renderedList = trends.map(trend  => {
@@ -11,7 +12,10 @@ const LocationTrends = ({ trends , location: { country, name }}) => {
     
       return (
         <LocationTrendsBox>
-          <h2>{name} - {country}</h2>
+          <Head>
+            <title>Twitter trends for {country}</title>
+          </Head>
+          <h2>{country} Trends</h2>
           <ul>
             {renderedList}
           </ul>
